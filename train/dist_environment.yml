@@ -1,0 +1,14 @@
+channels:
+- conda-forge
+dependencies:
+- python=3.8
+- pip
+- pip:
+  - pytorch-lightning==1.0.4
+  - cloudpickle==1.6.0
+  - torch==1.6.0
+  - torchvision==0.7.0
+  - numpy
+  - scipy
+  - azureml-defaults
+name: pl-env-pt160
