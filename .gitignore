@@ -1,3 +1,5 @@
 .ipynb_checkpoints/
 pred/.ipynb_checkpoints/
 train/.ipynb_checkpoints/
+workspace.code-workspace
+.vscode/settings.json
