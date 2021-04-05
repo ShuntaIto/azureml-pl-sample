@@ -7,3 +7,4 @@ train/livedoor_news_corpus.tar.gz
 train/livedoor/
 train/livedoor_news_corpus.tar.gz
 workspace.code-workspace
+train/lightning_logs/
