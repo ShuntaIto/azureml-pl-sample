@@ -3,3 +3,7 @@ pred/.ipynb_checkpoints/
 train/.ipynb_checkpoints/
 workspace.code-workspace
 .vscode/settings.json
+train/livedoor_news_corpus.tar.gz
+train/livedoor/
+train/livedoor_news_corpus.tar.gz
+workspace.code-workspace
