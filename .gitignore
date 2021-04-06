@@ -1,11 +1,11 @@
 .ipynb_checkpoints/
-pred/.ipynb_checkpoints/
 train/.ipynb_checkpoints/
+model_test/.ipynb_checkpoints/
+
 workspace.code-workspace
 .vscode/settings.json
-train/livedoor_news_corpus.tar.gz
-train/livedoor/
-train/livedoor_news_corpus.tar.gz
-workspace.code-workspace
-train/lightning_logs/
+
+model_test/livedoor/
+model_test/livedoor_news_corpus.tar.gz
+model_test/lightning_logs/
 pred/
