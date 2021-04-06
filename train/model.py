@@ -12,7 +12,7 @@ run = Run.get_context()
 
 class ResNetClassificationModel(pl.LightningModule):
     def __init__(self):
-        super(Model, self).__init__()
+        super(ResNetClassificationModel, self).__init__()
         self.resnet18 = models.resnet18(pretrained=True)
         self.resnet18.fc = nn.Linear(512, 10)
         
@@ -59,7 +59,7 @@ class ResNetClassificationModel(pl.LightningModule):
 
 class BERTClassificationModel(pl.LightningModule):
     def __init__(self):
-        super(Model, self).__init__()
+        super(BERTClassificationModel, self).__init__()
         self.bert = BertModel.from_pretrained('cl-tohoku/bert-base-japanese-whole-word-masking')
         self.output = nn.Linear(768, 9)
         
