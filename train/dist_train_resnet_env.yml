@@ -11,4 +11,4 @@ dependencies:
   - numpy
   - scipy
   - azureml-defaults
-name: pl-env-pt160
+name: pl-env-pt160-image
