@@ -7,8 +7,11 @@ dependencies:
   - pytorch-lightning==1.2.4
   - cloudpickle==1.6.0
   - torch==1.8.0
-  - torchvision==0.9.0
+  - transformers==4.4.2
+  - pandas
   - numpy
   - scipy
   - azureml-defaults
-name: pl-env-image
+  - ipadic
+  - fugashi
+name: pl-env-lang
