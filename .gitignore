@@ -9,3 +9,4 @@ model_test/livedoor/
 model_test/livedoor_news_corpus.tar.gz
 model_test/lightning_logs/
 pred/
+train/bert/__pycache__/
