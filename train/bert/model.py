@@ -25,6 +25,7 @@ class BERTClassificationModel(pl.LightningModule):
         y = y[:,0,:]
         y = y.view(-1, 768)
         y = self.output(y)
+        y = F.softmax(y, dim=1)
         return y
 
     def training_step(self, batch, batch_nb):

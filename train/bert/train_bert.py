@@ -94,7 +94,7 @@ def cli_main():
     # ------------
     model_path = os.path.join('outputs', 'model.onnx')
     
-    dummy_input = torch.randn(10, 512, device='cuda')
+    dummy_input = torch.randint(low=1, high=10000, size=(10, 512), device='cuda')
     torch.onnx.export(
         model=model,
         args=dummy_input,
