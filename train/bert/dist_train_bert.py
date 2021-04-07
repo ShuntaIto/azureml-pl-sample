@@ -101,7 +101,8 @@ def cli_main():
     # ------------
     # model saving
     # ------------
-    model_path = os.path.join('outputs', 'model.onnx')
+    model_name = "model" + str(os.environ["OMPI_COMM_WORLD_RANK"]) + ".onnx"
+    model_path = os.path.join('outputs', model_name)
 
     dummy_input = torch.randint(
         low=1, high=10000, size=(10, 512), device='cuda')
