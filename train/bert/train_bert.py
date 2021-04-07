@@ -103,7 +103,8 @@ def cli_main():
         verbose=True,
         input_names=["input"],
         output_names=["output"],
-        dynamic_axes={'input' : {0 : 'batch_size'}, 'output' : {0 : 'batch_size'}}
+        dynamic_axes={'input': {0: 'batch_size', 1: 'text_length'},
+                      'output': {0: 'batch_size', 1: 'text_length'}}
     )
 
 if __name__ == "__main__":
