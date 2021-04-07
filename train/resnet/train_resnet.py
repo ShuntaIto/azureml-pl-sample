@@ -9,10 +9,8 @@ import pytorch_lightning as pl
 from tqdm import tqdm
 import torchvision.models as models
 from argparse import ArgumentParser
+from model import ResNetClassificationModel
 
-from azureml_env_adapter import set_environment_variables
-from model import Model
-    
 def cli_main():
     pl.seed_everything(1234)
 
@@ -24,8 +22,6 @@ def cli_main():
     parser = pl.Trainer.add_argparse_args(parser)
     args = parser.parse_args()
 
-    set_environment_variables()
-    
     # ------------
     # data
     # ------------
@@ -47,7 +43,7 @@ def cli_main():
     # ------------
     # model
     # ------------
-    model = Model()
+    model = ResNetClassificationModel()
     #for param in model.resnet18.parameters():
     #    param.requires_grad = False
 

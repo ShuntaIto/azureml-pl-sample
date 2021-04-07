@@ -1,0 +1,17 @@
+channels:
+- conda-forge
+dependencies:
+- python=3.8
+- pip
+- pip:
+  - pytorch-lightning==1.0.4
+  - cloudpickle==1.6.0
+  - torch==1.6.0
+  - transformers==4.4.2
+  - pandas
+  - numpy
+  - scipy
+  - azureml-defaults
+  - ipadic
+  - fugashi
+name: pl-env-pt160-lang

@@ -1,5 +1,14 @@
 .ipynb_checkpoints/
-pred/.ipynb_checkpoints/
 train/.ipynb_checkpoints/
+model_test/.ipynb_checkpoints/
+
 workspace.code-workspace
 .vscode/settings.json
+
+model_test/livedoor/
+model_test/livedoor_news_corpus.tar.gz
+model_test/lightning_logs/
+pred/
+train/bert/__pycache__/
+pred/environment.yml
+pred/score.py
