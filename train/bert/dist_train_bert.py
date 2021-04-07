@@ -16,10 +16,13 @@ from tqdm import tqdm
 import urllib.request
 
 from argparse import ArgumentParser
+from azureml_env_adapter import set_environment_variables
 from model import BERTClassificationModel
 from livedoor_data import LivedoorDatasets
 
 # preprocess
+
+
 class TokenizerCollate:
     def __init__(self, tokenizer):
         self.tokenizer = tokenizer
@@ -38,6 +41,7 @@ class TokenizerCollate:
     def __call__(self, batch):
         return self.collate_fn(batch)
 
+
 def cli_main():
     pl.seed_everything(1234)
 
@@ -49,22 +53,26 @@ def cli_main():
     parser = pl.Trainer.add_argparse_args(parser)
     args = parser.parse_args()
 
+    set_environment_variables()
+
     # ------------
     # data
-    # ------------    
+    # ------------
     dataset = LivedoorDatasets()
     n_samples = len(dataset)
     train_size = int(len(dataset) * 0.8)
-    val_size = int(len(dataset) * 0.1) 
+    val_size = int(len(dataset) * 0.1)
     test_size = n_samples - train_size - val_size
-    train_dataset, val_dataset, test_dataset = torch.utils.data.random_split(dataset, [train_size, val_size, test_size])
-    
+    train_dataset, val_dataset, test_dataset = torch.utils.data.random_split(
+        dataset, [train_size, val_size, test_size])
+
     tokenizer = BertJapaneseTokenizer.from_pretrained(
         'cl-tohoku/bert-base-japanese-whole-word-masking')
 
     train_loader = DataLoader(
         train_dataset, batch_size=args.batch_size, collate_fn=TokenizerCollate(tokenizer=tokenizer))
-    val_loader = DataLoader(val_dataset, batch_size=args.batch_size, collate_fn=TokenizerCollate(tokenizer=tokenizer))    
+    val_loader = DataLoader(val_dataset, batch_size=args.batch_size,
+                            collate_fn=TokenizerCollate(tokenizer=tokenizer))
     test_loader = DataLoader(test_dataset, batch_size=args.batch_size,
                              collate_fn=TokenizerCollate(tokenizer=tokenizer))
 
@@ -81,20 +89,22 @@ def cli_main():
     # training
     # ------------
     trainer = pl.Trainer.from_argparse_args(args)
-    trainer.fit(model, train_dataloader=train_loader, val_dataloaders=val_loader) 
-    
+    trainer.fit(model, train_dataloader=train_loader,
+                val_dataloaders=val_loader)
+
     # ------------
     # testing
     # ------------
-    result = trainer.test(model,test_dataloaders=test_loader)
+    result = trainer.test(model, test_dataloaders=test_loader)
     print(result)
 
     # ------------
     # model saving
     # ------------
     model_path = os.path.join('outputs', 'model.onnx')
-    
-    dummy_input = torch.randint(low=1, high=10000, size=(10, 512), device='cuda')
+
+    dummy_input = torch.randint(
+        low=1, high=10000, size=(10, 512), device='cuda')
     torch.onnx.export(
         model=model,
         args=dummy_input,
@@ -106,6 +116,7 @@ def cli_main():
         dynamic_axes={'input': {0: 'batch_size', 1: 'text_length'},
                       'output': {0: 'batch_size'}}
     )
+
 
 if __name__ == "__main__":
     cli_main()
