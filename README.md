@@ -1,6 +1,15 @@
 # azureml-pl-sample
 
-Code sample for building ML model with PyTorch Lightning and training the model on Azure Machine Learning computing environment, covering training model to deploy model.
+Code samples for building ML model with PyTorch Lightning and training the model on Azure Machine Learning computing environment, covering training model to deploy model.
+
+## Model
+
+- BERT - text classification for livedoor news corpus 
+- ResNet - image classification for CIFAR-10
+
+### scheduled to be supported
+
+- GPT-2 - text generation
 
 ## How to Use
 
@@ -13,10 +22,12 @@ conda env create -f=env.yml
 conda activate py38-pt180
 ipython kernel install --user --name=py38-pt180
 ```
-2. execute each cells in train_aml.ipynb
-3. execute each cells in deploy_aml.ipynb
+2. execute each cells in train_***_aml.ipynb
+3. execute each cells in deploy_***_aml.ipynb
 
 If you want to try distributed-training model on cluster, create Computing Cluster with GPU and use 'dist-*' notebooks.
+
+If you want to train the model on Jupyter Notebook/JupyterLab or other jupyter-like environment, use 'model_test/*_model_test.ipynb'.
 
 ## distributed-training
 
@@ -27,6 +38,8 @@ I refered below resource to choose the appropriate version for distributed-train
 - https://azure.github.io/azureml-examples/docs/cheatsheet/
 - https://github.com/Azure/azureml-examples/tree/main/experimental/using-pytorch-lightning
 - https://github.com/PyTorchLightning/pytorch-lightning/issues/4612
+
+
 
 
 ## Reference
