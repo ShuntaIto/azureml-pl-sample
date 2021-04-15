@@ -36,7 +36,7 @@ class TokenizerCollate:
             truncation=True,
             return_tensors="pt")
         targets = torch.tensor([item[1] for item in batch])
-        return input["input_ids"], targets
+        return input, targets
 
     def __call__(self, batch):
         return self.collate_fn(batch)

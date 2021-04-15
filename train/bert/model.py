@@ -20,7 +20,7 @@ class BERTClassificationModel(pl.LightningModule):
         self.test_acc = pl.metrics.Accuracy()
 
     def forward(self, x):
-        y = self.bert(x).last_hidden_state
+        y = self.bert(**x).last_hidden_state
         ## cls token相当部分のhidden_stateのみ抜粋
         y = y[:,0,:]
         y = y.view(-1, 768)
