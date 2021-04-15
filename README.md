@@ -22,12 +22,12 @@ conda env create -f=env.yml
 conda activate py38-pt180
 ipython kernel install --user --name=py38-pt180
 ```
-2. execute each cells in train_***_aml.ipynb
-3. execute each cells in deploy_***_aml.ipynb
+2. execute each cells in \<model_name\>/train_\<model_name\>_aml.ipynb
+3. execute each cells in deploy_\<model_name\>_aml.ipynb
 
-If you want to try distributed-training model on cluster, create Computing Cluster with GPU and use 'dist-*' notebooks.
+If you want to try distributed-training model on cluster, create Computing Cluster with GPU and use 'dist_train_\<model_name\>_aml.ipynb' notebooks.
 
-If you want to train the model on Jupyter Notebook/JupyterLab or other jupyter-like environment, use 'model_test/*_model_test.ipynb'.
+If you want to train the model on Jupyter Notebook/JupyterLab or other jupyter-like environment, use 'model_test/\<model_name\>_model_test.ipynb'.
 
 ## distributed-training
 
@@ -38,9 +38,6 @@ I refered below resource to choose the appropriate version for distributed-train
 - https://azure.github.io/azureml-examples/docs/cheatsheet/
 - https://github.com/Azure/azureml-examples/tree/main/experimental/using-pytorch-lightning
 - https://github.com/PyTorchLightning/pytorch-lightning/issues/4612
-
-
-
 
 ## Reference
 
