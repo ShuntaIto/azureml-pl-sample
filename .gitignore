@@ -1,15 +1,23 @@
+*.amltmp
+.amlignore
+
 .ipynb_checkpoints/
-train/.ipynb_checkpoints/
-model_test/.ipynb_checkpoints/
 
 workspace.code-workspace
 .vscode/settings.json
 
+model_test/.ipynb_checkpoints/
 model_test/livedoor/
 model_test/livedoor_news_corpus.tar.gz
+model_test/ldcc-20140209.tar.gz
 model_test/lightning_logs/
-pred/
 
 BERT/train/bert/__pycache__
+BERT/.ipynb_checkpoints/
+BERT/.ipynb_aml_checkpoints/
+
 ResNet/train/resnet/__pycache__
+ResNet/.ipynb_checkpoints/
+ResNet/.ipynb_aml_checkpoints/
+
 
