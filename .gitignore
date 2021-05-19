@@ -15,9 +15,11 @@ model_test/lightning_logs/
 BERT/train/bert/__pycache__
 BERT/.ipynb_checkpoints/
 BERT/.ipynb_aml_checkpoints/
+BERT/pred/
 
 ResNet/train/resnet/__pycache__
 ResNet/.ipynb_checkpoints/
 ResNet/.ipynb_aml_checkpoints/
+ResNet/pred/
 
 
