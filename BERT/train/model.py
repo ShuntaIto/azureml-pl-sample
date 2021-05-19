@@ -19,8 +19,8 @@ class BERTClassificationModel(pl.LightningModule):
         self.val_acc = pl.metrics.Accuracy()
         self.test_acc = pl.metrics.Accuracy()
 
-    def forward(self, x):
-        y = self.bert(**x).last_hidden_state
+    def forward(self, input_ids, attention_mask, token_type_ids):
+        y = self.bert(input_ids, attention_mask, token_type_ids).last_hidden_state
         ## cls token相当部分のhidden_stateのみ抜粋
         y = y[:,0,:]
         y = y.view(-1, 768)
@@ -30,7 +30,7 @@ class BERTClassificationModel(pl.LightningModule):
 
     def training_step(self, batch, batch_nb):
         x, t = batch
-        y = self(x)
+        y = self(x['input_ids'], x['attention_mask'], x['token_type_ids'])
         loss = F.cross_entropy(y, t)
         run.log("loss", float(loss))
         ##self.log("loss", loss, prog_bar=True, logger=True, on_step=True, on_epoch=True)
@@ -38,7 +38,7 @@ class BERTClassificationModel(pl.LightningModule):
     
     def validation_step(self, batch, batch_nb): 
         x, t = batch
-        y = self(x)
+        y = self(x['input_ids'], x['attention_mask'], x['token_type_ids'])
         loss = F.cross_entropy(y, t)
         preds = torch.argmax(y, dim=1)
         run.log("val_loss", float(loss))
@@ -49,7 +49,7 @@ class BERTClassificationModel(pl.LightningModule):
 
     def test_step(self, batch, batch_nb):
         x, t = batch
-        y = self(x)
+        y = self(x['input_ids'], x['attention_mask'], x['token_type_ids'])
         loss = F.cross_entropy(y, t)
         preds = torch.argmax(y, dim=1)
         run.log("test_loss", float(loss))
