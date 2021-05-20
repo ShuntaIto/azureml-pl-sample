@@ -76,6 +76,9 @@ def cli_main():
     # fix BERT model
     for param in model.bert.parameters():
         param.requires_grad = False
+    
+    for param in model.bert.encoder.layer[-1].parameters():
+        param.requires_grad = True
 
     # ------------
     # training
