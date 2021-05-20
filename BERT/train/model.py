@@ -57,4 +57,7 @@ class BERTClassificationModel(pl.LightningModule):
         return loss
     
     def configure_optimizers(self):
-        return torch.optim.Adam(self.parameters(), lr=0.02)
+        return torch.optim.Adam([
+            {'params': self.bert.encoder.layer[-1].parameters(), 'lr': 5e-5},
+            {'params': self.output.parameters(), 'lr': 1e-4}
+        ])

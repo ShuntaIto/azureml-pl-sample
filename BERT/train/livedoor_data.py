@@ -22,8 +22,7 @@ def download_dataset():
     if not os.path.isfile("livedoor_news_corpus.tar.gz"):
         urllib.request.urlretrieve(
             "https://www.rondhuit.com/download/ldcc-20140209.tar.gz", download_path)
-
-    with tarfile.open(download_path, "r:gz") as t:
+    with tarfile.open(download_path) as t:
         t.extractall(extract_path)
 
 def preprocess():

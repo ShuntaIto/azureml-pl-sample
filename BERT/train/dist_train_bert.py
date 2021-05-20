@@ -84,6 +84,10 @@ def cli_main():
     # fix BERT model
     for param in model.bert.parameters():
         param.requires_grad = False
+    
+    for param in model.bert.encoder.layer[-1].parameters():
+        param.requires_grad = True
+
 
     # ------------
     # training
@@ -101,22 +105,35 @@ def cli_main():
     # ------------
     # model saving
     # ------------
-    model_name = "model" + str(os.environ["OMPI_COMM_WORLD_RANK"]) + ".onnx"
-    model_path = os.path.join('outputs', model_name)
-
-    dummy_input = torch.randint(
-        low=1, high=10000, size=(10, 512), device='cuda')
-    torch.onnx.export(
-        model=model,
-        args=dummy_input,
-        f=model_path,
-        opset_version=12,
-        verbose=True,
-        input_names=["input"],
-        output_names=["output"],
-        dynamic_axes={'input': {0: 'batch_size', 1: 'text_length'},
-                      'output': {0: 'batch_size'}}
-    )
+    model_path = os.path.join('outputs', "model.ckpt")
+    trainer.save_checkpoint(model_path)
+    
+    #model_name = "model" + str(os.environ["OMPI_COMM_WORLD_RANK"]) + ".onnx"
+    #model_path = os.path.join('outputs', model_name)
+#
+    #dummy_input_ids = torch.randint(low=1, high=10000, size=(10, 512), device='cuda')
+    #dummy_attention_mask = torch.ones(size=(10, 512), dtype=torch.long, device='cuda')
+    #dummy_token_type_ids = torch.zeros(size=(10, 512), dtype=torch.long, device='cuda')
+    #
+    #dummy_input = (dummy_input_ids, dummy_attention_mask, dummy_token_type_ids)
+    #dummy_output = model(dummy_input_ids, dummy_attention_mask, dummy_token_type_ids)
+#
+    #torch.onnx.export(
+    #    model=model,
+    #    args=dummy_input,
+    #    example_outputs=(dummy_output),
+    #    f=model_path,
+    #    opset_version=12,
+    #    verbose=True,
+    #    input_names=["input_ids","attention_mask","token_type_ids"],
+    #    output_names=["output"],
+    #    dynamic_axes={
+    #        'input_ids': [0, 1], 
+    #        'attention_mask': [0, 1], 
+    #        'token_type_ids': [0, 1], 
+    #        'output': [0]
+    #    }
+    #)
 
 
 if __name__ == "__main__":
