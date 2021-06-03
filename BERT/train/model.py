@@ -10,10 +10,13 @@ from azureml.core import Run
 run = Run.get_context()
 
 class BERTClassificationModel(pl.LightningModule):
-    def __init__(self):
+    def __init__(self, bert_lr=5e-5, output_lr=1e-4):
         super(BERTClassificationModel, self).__init__()
         self.bert = BertModel.from_pretrained('cl-tohoku/bert-base-japanese-whole-word-masking')
         self.output = nn.Linear(768, 9)
+        
+        self.bert_lr = bert_lr
+        self.output_lr = output_lr
         
         self.train_acc = pl.metrics.Accuracy()
         self.val_acc = pl.metrics.Accuracy()
@@ -58,6 +61,7 @@ class BERTClassificationModel(pl.LightningModule):
     
     def configure_optimizers(self):
         return torch.optim.Adam([
-            {'params': self.bert.encoder.layer[-1].parameters(), 'lr': 5e-5},
-            {'params': self.output.parameters(), 'lr': 1e-4}
+            {'params': self.bert.encoder.layer[-1].parameters(),
+             'lr': self.bert_lr},
+            {'params': self.output.parameters(), 'lr': self.output_lr}
         ])
