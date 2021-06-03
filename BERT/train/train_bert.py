@@ -46,6 +46,8 @@ def cli_main():
     # ------------
     parser = ArgumentParser()
     parser.add_argument("--batch_size", default=128, type=int)
+    parser.add_argument("--output_lr", default=0.001, type=float)
+    parser.add_argument("--bert_lr", default=0.0005, type=float)
     parser = pl.Trainer.add_argparse_args(parser)
     args = parser.parse_args()
 
@@ -71,7 +73,8 @@ def cli_main():
     # ------------
     # model
     # ------------
-    model = BERTClassificationModel()
+    model = BERTClassificationModel(
+        bert_lr=args.bert_lr, output_lr=args.output_lr)
 
     # fix BERT model
     for param in model.bert.parameters():
