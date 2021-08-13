@@ -2,7 +2,7 @@
 .amlignore
 
 .ipynb_checkpoints/
-./venv/
+.venv/
 
 workspace.code-workspace
 .vscode/settings.json
