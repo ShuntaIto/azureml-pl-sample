@@ -4,10 +4,11 @@ dependencies:
 - python=3.8
 - pip
 - pip:
-  - pytorch-lightning==1.2.4
-  - cloudpickle==1.6.0
-  - torch==1.8.0
-  - transformers==4.4.2
+  - pytorch-lightning
+  - torchmetrics
+  - cloudpickle
+  - torch
+  - transformers
   - pandas
   - numpy
   - scipy
