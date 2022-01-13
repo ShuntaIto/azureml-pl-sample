@@ -50,6 +50,7 @@ def cli_main():
     # ------------
     parser = ArgumentParser()
     parser.add_argument("--batch_size", default=128, type=int)
+    parser.add_argument("--learning_rate", default=1e-5, type=float)
     parser = pl.Trainer.add_argparse_args(parser)
     args = parser.parse_args()
 
@@ -79,7 +80,7 @@ def cli_main():
     # ------------
     # model
     # ------------
-    model = BERTClassificationModel()
+    model = BERTClassificationModel(output_lr=args.learning_rate)
 
     # fix BERT model
     for param in model.bert.parameters():

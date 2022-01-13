@@ -11,7 +11,7 @@ from azureml.core import Run
 run = Run.get_context()
 
 class BERTClassificationModel(pl.LightningModule):
-    def __init__(self, bert_lr=5e-5, output_lr=1e-6):
+    def __init__(self, bert_lr=5e-5, output_lr=1e-5):
         super(BERTClassificationModel, self).__init__()
         self.bert = BertModel.from_pretrained('cl-tohoku/bert-base-japanese-whole-word-masking')
         self.output = nn.Linear(768, 9)
@@ -42,6 +42,7 @@ class BERTClassificationModel(pl.LightningModule):
 
     def training_epoch_end(self, training_step_outputs):
         avg_loss = torch.stack([x['loss'] for x in self.all_gather(training_step_outputs)]).mean()
+        print(self.all_gather(training_step_outputs))
         if self.trainer.is_global_zero:
             run.log("train_loss", float(avg_loss))
     
