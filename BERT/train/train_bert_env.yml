@@ -13,6 +13,7 @@ dependencies:
   - numpy
   - scipy
   - azureml-defaults
+  - azureml-mlflow
   - ipadic
   - fugashi
 name: pl-env-lang

@@ -1,15 +1,19 @@
 import os
 import torch
+from torch import nn
+import torch.nn.functional as F
 from torch.utils.data import DataLoader
 import pytorch_lightning as pl
+
+from transformers import BertJapaneseTokenizer
+from transformers import BertModel
 
 import pandas as pd
 import tarfile
 from glob import glob
 import linecache
+from tqdm import tqdm
 import urllib.request
-
-torch.manual_seed(42)
 
 download_path = "livedoor_news_corpus.tar.gz"
 extract_path = "livedoor/"
@@ -67,48 +71,3 @@ class LivedoorDatasets(torch.utils.data.Dataset):
             out_data = self.transform(["input_ids"][0])
 
         return out_data, out_label
-
-class TokenizerCollate:
-    def __init__(self, tokenizer):
-        self.tokenizer = tokenizer
-
-    def collate_fn(self, batch):
-        input = [item[0] for item in batch]
-        input = self.tokenizer(
-            input,
-            padding=True,
-            max_length=512,
-            truncation=True,
-            return_tensors="pt")
-        targets = torch.tensor([item[1] for item in batch])
-        return input, targets
-
-    def __call__(self, batch):
-        return self.collate_fn(batch)
-
-class LivedoorNewsDataModule(pl.LightningDataModule):
-    def __init__(self, tokenizer, batch_size=32):
-        super().__init__()
-
-        self.batch_size = batch_size
-        self.tokenizer = tokenizer
-        
-    def prepare_data(self):
-        self.dataset = LivedoorDatasets()
-
-    def setup(self, stage):
-        self.n_samples = len(self.dataset)
-        self.train_size = int(self.n_samples * 0.8)
-        self.val_size = int(self.n_samples * 0.1)
-        self.test_size = self.n_samples - self.train_size - self.val_size
-        self.train_dataset, self.val_dataset, self.test_dataset = torch.utils.data.random_split(
-        self.dataset, [self.train_size, self.val_size, self.test_size])
-
-    def train_dataloader(self):
-        return DataLoader(self.train_dataset, batch_size=self.batch_size, shuffle=True, collate_fn=TokenizerCollate(tokenizer=self.tokenizer))
-    
-    def val_dataloader(self):
-        return DataLoader(self.val_dataset, batch_size=self.batch_size, collate_fn=TokenizerCollate(tokenizer=self.tokenizer))
-
-    def test_dataloader(self):
-        return DataLoader(self.test_dataset, batch_size=self.batch_size, collate_fn=TokenizerCollate(tokenizer=self.tokenizer))
