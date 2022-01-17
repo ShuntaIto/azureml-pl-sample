@@ -19,11 +19,23 @@ def set_environment_variables_for_nccl_backend(single_node=False, master_port=61
         # Do not overwrite master port with that defined in AZ_BATCH_MASTER_NODE
         if "MASTER_PORT" not in os.environ:
             os.environ["MASTER_PORT"] = str(master_port)
+        
+        try:
+            os.environ["NODE_RANK"] = os.environ[
+                "OMPI_COMM_WORLD_RANK"
+            ]  # node rank is the world_rank from mpi run
+        except:
+            pass
+
     else:
         os.environ["MASTER_ADDR"] = os.environ["AZ_BATCHAI_MPI_MASTER_NODE"]
         os.environ["MASTER_PORT"] = "54965"
+        os.environ["NODE_RANK"] = "0"
 
     os.environ["NCCL_SOCKET_IFNAME"] = "^docker0,lo"
-    os.environ["NODE_RANK"] = os.environ[
-        "OMPI_COMM_WORLD_RANK"
-    ]  # node rank is the world_rank from mpi run
+
+    os.environ["HOROVOD_GPU_OPERATIONS"] = "NCCL"
+
+    print("MASTER_ADDR = {}".format(os.environ["MASTER_ADDR"]))
+    print("MASTER_PORT = {}".format(os.environ["MASTER_PORT"]))
+    print("NODE_RANK = {}".format(os.environ["NODE_RANK"]))

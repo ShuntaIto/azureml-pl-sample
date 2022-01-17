@@ -17,4 +17,5 @@ dependencies:
   - azureml-mlflow
   - ipadic
   - fugashi
+  - horovod==0.19.5 # 0.19.5 で動作確認、要検証
 name: pl-env-lang
